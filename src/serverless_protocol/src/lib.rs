@@ -35,9 +35,9 @@ pub struct CloudletMessage {
 
 pub fn create_checksum(payload: &Payload) -> u16 {
     let mut checksum: u16 = 0;
-    let json_payload = serde_json::to_string(payload).unwrap();
-    for byte in json_payload.as_bytes() {
-        checksum = checksum.wrapping_add(*byte as u16);
+    let bytes = bincode::serialize(payload).unwrap();
+    for byte in bytes {
+        checksum = checksum.wrapping_add(byte as u16);
     }
     checksum
 }
