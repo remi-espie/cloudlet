@@ -1,6 +1,6 @@
 use super::config::{Action, Config};
 use crate::{
-    agents::{rust, Agent, Language},
+    agents::{rust, mock, Agent, Language},
     AgentResult,
 };
 
@@ -15,6 +15,7 @@ impl Runner {
     pub fn new(config: Config) -> Self {
         let agent: Box<dyn Agent> = match config.language {
             Language::Rust => Box::new(rust::RustAgent::from(config.clone())),
+            Language::Mock => Box::new(mock::MockAgent::from(config.clone())),
         };
 
         Runner { config, agent }

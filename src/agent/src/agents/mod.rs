@@ -2,6 +2,7 @@ use crate::AgentResult;
 use serde::Deserialize;
 
 pub mod rust;
+pub mod mock;
 
 #[derive(Debug, Clone)]
 pub struct AgentOutput {
@@ -19,12 +20,14 @@ pub trait Agent {
 #[serde(rename_all = "kebab-case")]
 pub enum Language {
     Rust,
+    Mock
 }
 
 impl std::fmt::Display for Language {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Language::Rust => write!(f, "rust"),
+            Language::Mock => write!(f, "mock"),
         }
     }
 }
