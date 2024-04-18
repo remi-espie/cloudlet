@@ -1,8 +1,8 @@
 use crate::AgentResult;
 use serde::Deserialize;
 
-pub mod rust;
 pub mod mock;
+pub mod rust;
 
 #[derive(Debug, Clone)]
 pub struct AgentOutput {
@@ -20,7 +20,7 @@ pub trait Agent {
 #[serde(rename_all = "kebab-case")]
 pub enum Language {
     Rust,
-    Mock
+    Mock,
 }
 
 impl std::fmt::Display for Language {

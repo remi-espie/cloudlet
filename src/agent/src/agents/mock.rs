@@ -1,5 +1,5 @@
 use crate::agents::Agent;
-use crate::{AgentResult, workload};
+use crate::{workload, AgentResult};
 
 pub struct MockAgent {
     workload_config: workload::config::Config,
@@ -7,9 +7,7 @@ pub struct MockAgent {
 
 impl From<workload::config::Config> for MockAgent {
     fn from(workload_config: workload::config::Config) -> Self {
-        Self {
-            workload_config,
-        }
+        Self { workload_config }
     }
 }
 

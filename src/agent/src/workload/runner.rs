@@ -1,6 +1,6 @@
 use super::config::{Action, Config};
 use crate::{
-    agents::{rust, mock, Agent, Language},
+    agents::{mock, rust, Agent, Language},
     AgentResult,
 };
 
