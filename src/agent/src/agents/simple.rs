@@ -3,17 +3,17 @@ use crate::{workload, AgentResult};
 use std::fs::create_dir_all;
 use std::time::SystemTime;
 
-pub struct MockAgent {
+pub struct SimpleAgent {
     workload_config: workload::config::Config,
 }
 
-impl From<workload::config::Config> for MockAgent {
+impl From<workload::config::Config> for SimpleAgent {
     fn from(workload_config: workload::config::Config) -> Self {
         Self { workload_config }
     }
 }
 
-impl Agent for MockAgent {
+impl Agent for SimpleAgent {
     fn prepare(&self) -> AgentResult<()> {
         let dir = format!("/tmp/{}", self.workload_config.workload_name);
 
@@ -22,9 +22,9 @@ impl Agent for MockAgent {
         create_dir_all(&dir).expect("Unable to create directory");
 
         std::fs::write(
-            format!("{}/mock.txt", &dir),
+            format!("{}/simple.txt", &dir),
             format!(
-                "Mock agent for {} - written at {:?}",
+                "Simple agent for {} - written at {:?}",
                 self.workload_config.workload_name,
                 SystemTime::now()
             ),
@@ -37,10 +37,10 @@ impl Agent for MockAgent {
     fn run(&self) -> AgentResult<()> {
         let dir = format!("/tmp/{}", self.workload_config.workload_name);
 
-        let content = std::fs::read_to_string(format!("{}/mock.txt", &dir))
+        let content = std::fs::read_to_string(format!("{}/simple.txt", &dir))
             .expect("Unable to read mock.txt file");
 
-        println!("Mock agent content: {}", content);
+        println!("Simple agent content: {}", content);
 
         Ok(())
     }
