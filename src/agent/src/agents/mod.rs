@@ -2,6 +2,7 @@ use crate::AgentResult;
 use serde::Deserialize;
 
 pub mod rust;
+#[cfg(feature = "debug-agent")]
 pub mod simple;
 
 #[derive(Debug, Clone)]
@@ -20,6 +21,7 @@ pub trait Agent {
 #[serde(rename_all = "kebab-case")]
 pub enum Language {
     Rust,
+    #[cfg(feature = "debug-agent")]
     Simple,
 }
 
@@ -27,6 +29,7 @@ impl std::fmt::Display for Language {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Language::Rust => write!(f, "rust"),
+            #[cfg(feature = "debug-agent")]
             Language::Simple => write!(f, "simple"),
         }
     }
