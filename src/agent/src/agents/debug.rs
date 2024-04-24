@@ -4,17 +4,17 @@ use crate::{workload, AgentResult};
 use std::fs::create_dir_all;
 use std::time::SystemTime;
 
-pub struct SimpleAgent {
+pub struct DebugAgent {
     workload_config: workload::config::Config,
 }
 
-impl From<workload::config::Config> for SimpleAgent {
+impl From<workload::config::Config> for DebugAgent {
     fn from(workload_config: workload::config::Config) -> Self {
         Self { workload_config }
     }
 }
 
-impl Agent for SimpleAgent {
+impl Agent for DebugAgent {
     fn prepare(&self) -> AgentResult<AgentOutput> {
         let dir = format!("/tmp/{}", self.workload_config.workload_name);
 
@@ -23,14 +23,14 @@ impl Agent for SimpleAgent {
         create_dir_all(&dir).expect("Unable to create directory");
 
         std::fs::write(
-            format!("{}/simple.txt", &dir),
+            format!("{}/debug.txt", &dir),
             format!(
-                "Simple agent for {} - written at {:?}",
+                "Debug agent for {} - written at {:?}",
                 self.workload_config.workload_name,
                 SystemTime::now(),
             ),
         )
-        .expect("Unable to write main.rs file");
+        .expect("Unable to write debug.txt file");
 
         Ok(AgentOutput {
             exit_code: 0,
@@ -42,8 +42,8 @@ impl Agent for SimpleAgent {
     fn run(&self) -> AgentResult<AgentOutput> {
         let dir = format!("/tmp/{}", self.workload_config.workload_name);
 
-        let content = std::fs::read_to_string(format!("{}/simple.txt", &dir))
-            .expect("Unable to read mock.txt file");
+        let content = std::fs::read_to_string(format!("{}/debug.txt", &dir))
+            .expect("Unable to read debug.txt file");
 
         std::fs::remove_dir_all(dir).expect("Unable to remove directory");
 

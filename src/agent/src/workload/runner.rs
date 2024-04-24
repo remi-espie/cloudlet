@@ -5,7 +5,7 @@ use crate::{
 };
 
 #[cfg(feature = "debug-agent")]
-use crate::agents::simple;
+use crate::agents::debug;
 
 /// Runner for a workload.  
 /// Will execute the workload based on the inner agent (language).
@@ -19,7 +19,7 @@ impl Runner {
         let agent: Box<dyn Agent> = match config.language {
             Language::Rust => Box::new(rust::RustAgent::from(config.clone())),
             #[cfg(feature = "debug-agent")]
-            Language::Simple => Box::new(simple::SimpleAgent::from(config.clone())),
+            Language::Debug => Box::new(debug::DebugAgent::from(config.clone())),
         };
 
         Runner { config, agent }
